@@ -1,7 +1,6 @@
 package com.github.kauacorreaarruda.web_services.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.kauacorreaarruda.web_services.enumeration.OrderStatus;
 import jakarta.persistence.*;
 

@@ -3,7 +3,6 @@ package com.github.kauacorreaarruda.web_services.service;
 import com.github.kauacorreaarruda.web_services.entity.Order;
 import com.github.kauacorreaarruda.web_services.entity.User;
 import com.github.kauacorreaarruda.web_services.repository.OrderRepository;
-import com.github.kauacorreaarruda.web_services.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

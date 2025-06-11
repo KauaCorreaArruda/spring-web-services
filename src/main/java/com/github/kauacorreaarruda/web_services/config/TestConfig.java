@@ -1,11 +1,12 @@
 package com.github.kauacorreaarruda.web_services.config;
 
+import com.github.kauacorreaarruda.web_services.entity.Category;
 import com.github.kauacorreaarruda.web_services.entity.Order;
 import com.github.kauacorreaarruda.web_services.entity.User;
 import com.github.kauacorreaarruda.web_services.enumeration.OrderStatus;
+import com.github.kauacorreaarruda.web_services.repository.CategoryRepository;
 import com.github.kauacorreaarruda.web_services.repository.OrderRepository;
 import com.github.kauacorreaarruda.web_services.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,14 +18,24 @@ import java.util.Arrays;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
