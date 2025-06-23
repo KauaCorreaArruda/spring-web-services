@@ -1,6 +1,7 @@
 package com.github.kauacorreaarruda.web_services.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.kauacorreaarruda.web_services.entity.pk.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
