@@ -2,7 +2,7 @@ package com.github.kauacorreaarruda.web_services.service;
 
 import com.github.kauacorreaarruda.web_services.entity.Category;
 import com.github.kauacorreaarruda.web_services.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.kauacorreaarruda.web_services.service.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository repository;
+    private final CategoryRepository repository;
+
+    public CategoryService(CategoryRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Category> findAll() {
         return repository.findAll();
@@ -20,6 +23,6 @@ public class CategoryService {
 
     public Category findById(Long id) {
         Optional<Category> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }
