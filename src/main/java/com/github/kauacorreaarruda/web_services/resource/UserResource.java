@@ -2,6 +2,7 @@ package com.github.kauacorreaarruda.web_services.resource;
 
 import com.github.kauacorreaarruda.web_services.entity.User;
 import com.github.kauacorreaarruda.web_services.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -10,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/users")
+@RequestMapping(value = "/api/v1/users", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class UserResource {
 
     private final UserService service;

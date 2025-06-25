@@ -2,6 +2,7 @@ package com.github.kauacorreaarruda.web_services.resource;
 
 import com.github.kauacorreaarruda.web_services.entity.Order;
 import com.github.kauacorreaarruda.web_services.service.OrderService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/orders")
+@RequestMapping(value = "/api/v1/orders", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class OrderResource {
 
     private final OrderService service;
