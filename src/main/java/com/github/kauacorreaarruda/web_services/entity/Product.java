@@ -16,9 +16,17 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
+
+    @Column(name = "description", length = 500)
     private String description;
+
+    @Column(name = "price", precision = 10, scale = 2)
     private Double price;
+
+    @Column(name = "img_url", length = 255)
     private String imgUrl;
 
     @ManyToMany

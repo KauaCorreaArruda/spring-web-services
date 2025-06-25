@@ -3,6 +3,7 @@ package com.github.kauacorreaarruda.web_services.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.kauacorreaarruda.web_services.entity.pk.OrderItemPK;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -18,7 +19,10 @@ public class OrderItem implements Serializable {
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
+    @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "price")
     private Double price;
 
     public OrderItem() {

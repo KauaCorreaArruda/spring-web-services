@@ -14,6 +14,8 @@ public class Payment implements Serializable {
 
     @Id
     private Long id;
+
+    @Column(name = "moment", nullable = false)
     private Instant moment;
 
     @JsonIgnore
