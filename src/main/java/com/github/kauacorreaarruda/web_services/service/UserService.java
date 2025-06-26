@@ -1,6 +1,8 @@
 package com.github.kauacorreaarruda.web_services.service;
 
+import com.github.kauacorreaarruda.web_services.dto.user.UserCreateRequestDTO;
 import com.github.kauacorreaarruda.web_services.entity.User;
+import com.github.kauacorreaarruda.web_services.mapper.UserMapper;
 import com.github.kauacorreaarruda.web_services.repository.UserRepository;
 import com.github.kauacorreaarruda.web_services.service.exception.DatabaseException;
 import com.github.kauacorreaarruda.web_services.service.exception.ResourceNotFoundException;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
+    private final UserMapper mapper;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     public List<User> findAll() {
@@ -29,8 +33,9 @@ public class UserService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public User insert(User obj) {
-        return repository.save(obj);
+    public User insert(UserCreateRequestDTO userCreateRequestDTO) {
+        User user = mapper.mapDTOToEntity(userCreateRequestDTO);
+        return repository.save(user);
     }
 
     public void delete(Long id) {

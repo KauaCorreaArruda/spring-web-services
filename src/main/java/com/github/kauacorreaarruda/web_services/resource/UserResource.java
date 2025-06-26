@@ -1,7 +1,9 @@
 package com.github.kauacorreaarruda.web_services.resource;
 
+import com.github.kauacorreaarruda.web_services.dto.user.UserCreateRequestDTO;
 import com.github.kauacorreaarruda.web_services.entity.User;
 import com.github.kauacorreaarruda.web_services.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User user) {
-        user = service.insert(user);
+    public ResponseEntity<User> insert(@Valid @RequestBody UserCreateRequestDTO userCreateRequestDTO) {
+        User user = service.insert(userCreateRequestDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(user);
     }

@@ -1,7 +1,6 @@
 package com.github.kauacorreaarruda.web_services.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.kauacorreaarruda.web_services.entity.pk.OrderItemPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -9,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -23,12 +23,12 @@ public class OrderItem implements Serializable {
     private Integer quantity;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+    public OrderItem(Order order, Product product, Integer quantity, BigDecimal price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
@@ -60,16 +60,19 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Double getSubTotal() {
-        return price * quantity;
+    public BigDecimal getSubTotal() {
+        if (price == null || quantity == null) {
+            return BigDecimal.ZERO;
+        }
+        return price.multiply(BigDecimal.valueOf(quantity));
     }
 
     @Override
