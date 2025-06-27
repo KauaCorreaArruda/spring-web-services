@@ -1,6 +1,7 @@
 package com.github.kauacorreaarruda.web_services.service;
 
 import com.github.kauacorreaarruda.web_services.dto.user.UserCreateRequestDTO;
+import com.github.kauacorreaarruda.web_services.dto.user.UserUpdateRequestDTO;
 import com.github.kauacorreaarruda.web_services.entity.User;
 import com.github.kauacorreaarruda.web_services.mapper.UserMapper;
 import com.github.kauacorreaarruda.web_services.repository.UserRepository;
@@ -24,18 +25,20 @@ public class UserService {
         this.mapper = mapper;
     }
 
-    public List<User> findAll() {
-        return repository.findAll();
-    }
-
-    public User findById(Long id) {
-        Optional<User> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
-    }
-
     public User insert(UserCreateRequestDTO userCreateRequestDTO) {
-        User user = mapper.mapDTOToEntity(userCreateRequestDTO);
+        User user = mapper.mapDTOToEntityCreate(userCreateRequestDTO);
         return repository.save(user);
+    }
+
+    public User update(Long id, UserUpdateRequestDTO userUpdateRequestDTO) {
+        try {
+            User user = repository.getReferenceById(id);
+            mapper.mapDTOToEntityUpdate(userUpdateRequestDTO);
+            return repository.save(user);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public void delete(Long id) {
@@ -49,20 +52,12 @@ public class UserService {
         }
     }
 
-    public User update(Long id, User obj) {
-        try {
-            User entity = repository.getReferenceById(id);
-            updateData(entity, obj);
-            return repository.save(entity);
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException(id);
-        }
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
-    private void updateData(User entity, User obj) {
-        entity.setName(obj.getName());
-        entity.setEmail(obj.getEmail());
-        entity.setPhone(obj.getPhone());
+    public User findById(Long id) {
+        Optional<User> obj = repository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

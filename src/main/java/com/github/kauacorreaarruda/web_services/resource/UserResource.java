@@ -1,7 +1,10 @@
 package com.github.kauacorreaarruda.web_services.resource;
 
 import com.github.kauacorreaarruda.web_services.dto.user.UserCreateRequestDTO;
+import com.github.kauacorreaarruda.web_services.dto.user.UserResponseDTO;
+import com.github.kauacorreaarruda.web_services.dto.user.UserUpdateRequestDTO;
 import com.github.kauacorreaarruda.web_services.entity.User;
+import com.github.kauacorreaarruda.web_services.mapper.UserMapper;
 import com.github.kauacorreaarruda.web_services.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
@@ -11,15 +14,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/users", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class UserResource {
 
     private final UserService service;
+    private final UserMapper mapper;
 
-    public UserResource(UserService service) {
+    public UserResource(UserService service, UserMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @PostMapping
@@ -30,8 +36,8 @@ public class UserResource {
     }
 
     @PutMapping(value = "{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
-        user = service.update(id, user);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateRequestDTO userUpdateRequestDTO) {
+        User user = service.update(id, userUpdateRequestDTO);
         return ResponseEntity.ok().body(user);
     }
 
@@ -42,14 +48,15 @@ public class UserResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
         List<User> users = service.findAll();
-        return ResponseEntity.ok().body(users);
+        List<UserResponseDTO> dtoList = users.stream().map(mapper::mapEntityToDTO).collect(Collectors.toList());
+        return ResponseEntity.ok().body(dtoList);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
         User user = service.findById(id);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(mapper.mapEntityToDTO(user));
     }
 }
