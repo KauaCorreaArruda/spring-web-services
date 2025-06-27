@@ -26,7 +26,7 @@ public class UserMapper {
 
     public User mapDTOToEntityUpdate(final UserUpdateRequestDTO dto) {
         if (dto == null) {
-            throw new ResourceNotFoundException("UserCreateRequestDTO can't be null");
+            throw new ResourceNotFoundException("UserUpdateRequestDTO can't be null");
         }
 
         User user = new User();
