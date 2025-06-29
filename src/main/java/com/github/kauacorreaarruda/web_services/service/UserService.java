@@ -33,7 +33,7 @@ public class UserService {
     public User update(Long id, UserUpdateRequestDTO userUpdateRequestDTO) {
         try {
             User user = repository.getReferenceById(id);
-            mapper.mapDTOToEntityUpdate(userUpdateRequestDTO);
+            mapper.mapDTOToEntityUpdate(userUpdateRequestDTO, user);
             return repository.save(user);
         }
         catch (EntityNotFoundException e) {

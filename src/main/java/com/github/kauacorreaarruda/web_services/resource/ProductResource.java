@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/products", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -29,7 +28,7 @@ public class ProductResource {
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> findAll() {
         List<Product> products = service.findAll();
-        List<ProductResponseDTO> dtoList = products.stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
+        List<ProductResponseDTO> dtoList = products.stream().map(mapper::mapEntityToDto).toList();
         return ResponseEntity.ok().body(dtoList);
     }
 

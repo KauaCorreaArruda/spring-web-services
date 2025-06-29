@@ -14,7 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/users", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -50,7 +49,7 @@ public class UserResource {
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> findAll() {
         List<User> users = service.findAll();
-        List<UserResponseDTO> dtoList = users.stream().map(mapper::mapEntityToDTO).collect(Collectors.toList());
+        List<UserResponseDTO> dtoList = users.stream().map(mapper::mapEntityToDTO).toList();
         return ResponseEntity.ok().body(dtoList);
     }
 

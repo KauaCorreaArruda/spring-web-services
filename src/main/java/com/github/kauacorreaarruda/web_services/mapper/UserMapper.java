@@ -24,17 +24,14 @@ public class UserMapper {
         return user;
     }
 
-    public User mapDTOToEntityUpdate(final UserUpdateRequestDTO dto) {
-        if (dto == null) {
-            throw new ResourceNotFoundException("UserUpdateRequestDTO can't be null");
+    public void mapDTOToEntityUpdate(final UserUpdateRequestDTO dto, User user) {
+        if (dto == null || user == null) {
+            throw new ResourceNotFoundException("User and DTO can't be null");
         }
 
-        User user = new User();
         user.setName(dto.name());
         user.setEmail(dto.email());
         user.setPhone(dto.phone());
-
-        return user;
     }
 
     public UserResponseDTO mapEntityToDTO(final User user) {
